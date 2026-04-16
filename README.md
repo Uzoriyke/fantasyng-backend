@@ -1,2 +1,2 @@
-# fantasyng-backend2
+# fantasyng-backend
 FANTASYNG Backend API — Node.js + Express + MongoDB
