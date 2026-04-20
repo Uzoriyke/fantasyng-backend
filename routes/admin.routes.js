@@ -1,0 +1,18 @@
+const express = require('express');
+const router = express.Router();
+const ctrl = require('../controllers/admin.controller');
+const { protect, adminOnly, executivesOnly } = require('../middleware/auth.middleware');
+router.use(protect, adminOnly);
+router.get('/dashboard', ctrl.getDashboardStats);
+router.get('/members', ctrl.getAllMembers);
+router.put('/members/:id/ban', ctrl.banMember);
+router.put('/members/:id/suspend', ctrl.suspendMember);
+router.put('/members/:id/reinstate', ctrl.reinstateMember);
+router.put('/members/:id/elevate', executivesOnly, ctrl.elevateMember);
+router.put('/members/:id/badge', executivesOnly, ctrl.changeBadgeWithoutPayment);
+router.get('/reports', ctrl.getReports);
+router.put('/reports/:id/resolve', ctrl.resolveReport);
+router.post('/posts/:id/promote', ctrl.promotePost);
+router.get('/revenue', executivesOnly, ctrl.getRevenue);
+router.get('/audit-log', ctrl.getAuditLog);
+module.exports = router;

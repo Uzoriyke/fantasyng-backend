@@ -1,0 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const ctrl = require('../controllers/badge.controller');
+const { protect, adminOnly } = require('../middleware/auth.middleware');
+const upload = require('../middleware/upload.middleware');
+router.post('/apply', protect, upload.fields([{ name:'photo', maxCount:1 },{ name:'video', maxCount:1 },{ name:'id', maxCount:1 }]), ctrl.applyForBadge);
+router.get('/my-applications', protect, ctrl.getMyApplications);
+router.get('/queue', protect, adminOnly, ctrl.getApplicationQueue);
+router.put('/approve/:id', protect, adminOnly, ctrl.approveApplication);
+router.put('/reject/:id', protect, adminOnly, ctrl.rejectApplication);
+module.exports = router;

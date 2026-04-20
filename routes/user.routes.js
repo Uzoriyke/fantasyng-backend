@@ -1,0 +1,13 @@
+const express = require('express');
+const router = express.Router();
+const ctrl = require('../controllers/user.controller');
+const { protect } = require('../middleware/auth.middleware');
+const upload = require('../middleware/upload.middleware');
+router.get('/browse', protect, ctrl.browseMembers);
+router.get('/daily-match', protect, ctrl.getDailyMatch);
+router.get('/:id', protect, ctrl.getMemberProfile);
+router.put('/profile', protect, upload.single('photo'), ctrl.updateProfile);
+router.put('/settings/privacy', protect, ctrl.updatePrivacySettings);
+router.post('/block/:id', protect, ctrl.blockUser);
+router.delete('/block/:id', protect, ctrl.unblockUser);
+module.exports = router;
